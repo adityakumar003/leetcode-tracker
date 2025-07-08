@@ -1,0 +1,9 @@
+# Node.js dependencies
+node_modules/
+
+# Environment variables (if any)
+.env
+
+# OS & editor files
+.DS_Store
+.vscode/
