@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
         searchButton.disabled = true;
 
         // ✅ Correct fetch call to your backend
-        const response = await fetch("http://localhost:4000/api/leetcode", {
+        const response = await fetch("https://leetcode-api-yeao.onrender.com/api/leetcode", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
