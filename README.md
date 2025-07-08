@@ -6,7 +6,11 @@ A visually appealing, real-time web app to track your **LeetCode profile stats**
 
 ## 🚀 Live Demo
 
-> Coming soon — deploy using GitHub Pages, Vercel, or Netlify for frontend + Render or Railway for backend.
+### 🚀 Live Fullstack Deployment
+
+🔗 [LeetCode Tracker — Live Demo](https://leetcode-tracker-five.vercel.app/)  
+> Frontend hosted on **Vercel** & Backend powered by **Render**
+
 
 ---
 
