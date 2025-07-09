@@ -1,16 +1,19 @@
 const express = require("express");
 const cors = require("cors");
 
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
-
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.post("/api/leetcode", async (req, res) => {
-    const { username } = req.body;
+app.get("/", (req, res) => {
+  res.send("Backend is live ✅");
+});
 
-    const query = `
+app.post("/api/leetcode", async (req, res) => {
+  const { username } = req.body;
+
+  const graphql = JSON.stringify({
+    query: `
       query userSessionProgress($username: String!) {
         allQuestionsCount {
           difficulty
@@ -30,36 +33,26 @@ app.post("/api/leetcode", async (req, res) => {
             }
           }
         }
-      }
-    `;
+      }`,
+    variables: { username },
+  });
 
-    try {
-        const response = await fetch("https://leetcode.com/graphql/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                query,
-                variables: { username }
-            })
-        });
+  try {
+    const fetch = (await import('node-fetch')).default;
+    const response = await fetch("https://leetcode.com/graphql", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: graphql,
+    });
 
-        const data = await response.json();
-        res.json(data);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "fetch failed", detail: error.message });
-    }
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: "Something went wrong" });
+  }
 });
 
 const PORT = process.env.PORT || 4000;
-
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`✅ Server is running and listening on port ${PORT}`);
 });
-
-app.get("/", (req, res) => {
-  res.send("Backend is live ✅");
-});
-
